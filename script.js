@@ -56,8 +56,11 @@ eyeBtn.addEventListener("click", function () {
   passInput.focus();
 });
 
-var state = { q: "", tipe: "semua" };
+var state = { q: "", tipe: "1" };
 var chips = [];
+
+var TYPE_LABEL = {};
+TIPES.forEach(function (t) { TYPE_LABEL[t.id] = t.label; });
 
 TIPES.forEach(function (t) {
   var b = document.createElement("button");
@@ -79,6 +82,36 @@ function domainOf(url) {
   } catch (err) {
     return "";
   }
+}
+
+function favSources(domain) {
+  return [
+    "https://icon.horse/icon/" + domain,
+    "https://www.google.com/s2/favicons?domain=" + domain + "&sz=64"
+  ];
+}
+
+function placeFav(ico, letter, domain) {
+  ico.appendChild(letter);
+  var urls = favSources(domain);
+  var idx = 0;
+  function tryNext() {
+    if (idx >= urls.length) return;
+    var img = new Image();
+    img.className = "card-fav";
+    img.setAttribute("alt", "");
+    img.addEventListener("load", function () {
+      ico.innerHTML = "";
+      ico.appendChild(img);
+    });
+    img.addEventListener("error", function () {
+      idx++;
+      tryNext();
+    });
+    img.src = urls[idx];
+    idx++;
+  }
+  tryNext();
 }
 
 function buildCard(s, i) {
@@ -105,14 +138,7 @@ function buildCard(s, i) {
 
   var domain = domainOf(s.url);
   if (domain) {
-    var img = new Image();
-    img.className = "card-fav";
-    img.src = "https://www.google.com/s2/favicons?domain=" + domain + "&sz=64";
-    img.addEventListener("error", function () {
-      ico.innerHTML = "";
-      ico.appendChild(letter);
-    });
-    ico.appendChild(img);
+    placeFav(ico, letter, domain);
   } else {
     ico.appendChild(letter);
   }
@@ -137,7 +163,7 @@ function buildCard(s, i) {
   tags.className = "card-tags";
   var tp = document.createElement("span");
   tp.className = "tag tag-type";
-  tp.textContent = s.tipe;
+  tp.textContent = TYPE_LABEL[s.tipe] || s.tipe;
   tags.appendChild(tp);
   s.tag.split(/[\s,]+/).forEach(function (t) {
     if (!t) return;
@@ -156,7 +182,7 @@ function buildCard(s, i) {
 function render() {
   var q = state.q.toLowerCase();
   var list = SITES.filter(function (s) {
-    return (state.tipe === "semua" || s.tipe === state.tipe) &&
+    return (state.tipe === "1" || s.tipe === state.tipe) &&
       (s.nama + " " + s.url + " " + s.tag).toLowerCase().indexOf(q) !== -1;
   });
 
