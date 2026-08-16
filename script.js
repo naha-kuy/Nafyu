@@ -93,6 +93,10 @@ function domainOf(url) {
   }
 }
 
+function typesOf(s) {
+  return Array.isArray(s.tipe) ? s.tipe : (s.tipe ? [s.tipe] : []);
+}
+
 function favSources(domain) {
   return [
     "https://icon.horse/icon/" + domain,
@@ -186,7 +190,8 @@ function buildCard(s, i) {
   tags.className = "card-tags";
   var tp = document.createElement("span");
   tp.className = "tag tag-type";
-  tp.textContent = TYPE_LABEL[s.tipe] || s.tipe;
+  var firstType = typesOf(s)[0] || "";
+  tp.textContent = (firstType && TYPE_LABEL[firstType]) || firstType || "—";
   tags.appendChild(tp);
   s.tag.split(/[\s,]+/).forEach(function (t) {
     if (!t) return;
@@ -205,7 +210,7 @@ function buildCard(s, i) {
 function render() {
   var q = state.q.toLowerCase();
   var list = SITES.filter(function (s) {
-    return (state.tipe === SEMUA_ID || s.tipe === state.tipe) &&
+    return (state.tipe === SEMUA_ID || typesOf(s).indexOf(state.tipe) !== -1) &&
       (s.nama + " " + s.url + " " + s.tag).toLowerCase().indexOf(q) !== -1;
   });
 

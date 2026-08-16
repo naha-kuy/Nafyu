@@ -21,6 +21,6 @@ const SITES = [
     tag: "Finansial Tabungan" },
   { nama: "Fee Mathematalk",
     url: "https://docs.google.com/spreadsheets/d/1LjId8Gz9HWswfwniDhr9P1XSepOVmCxZjkOPTKjWA-k/edit?usp=sharing",
-    tipe: "3",
+    tipe: ["3", "4"],
     tag: "Finansial Analysis Fee" }
 ];
