@@ -29,7 +29,15 @@ function openIndex() {
   search.focus();
 }
 
-var saved = localStorage.getItem(AUTH_KEY);
+function storeCache(key, value) {
+  try { localStorage.setItem(key, value); } catch (err) {}
+}
+
+function readCache(key) {
+  try { return localStorage.getItem(key); } catch (err) { return null; }
+}
+
+var saved = readCache(AUTH_KEY);
 if (saved && Date.now() < Number(saved)) {
   openIndex();
 }
@@ -37,7 +45,7 @@ if (saved && Date.now() < Number(saved)) {
 lockForm.addEventListener("submit", function (e) {
   e.preventDefault();
   if (passInput.value.trim().toLowerCase() === PASS.toLowerCase()) {
-    localStorage.setItem(AUTH_KEY, String(nextFridayWIB(Date.now())));
+    storeCache(AUTH_KEY, String(nextFridayWIB(Date.now())));
     openIndex();
   } else {
     lockError.classList.add("show");
@@ -56,7 +64,8 @@ eyeBtn.addEventListener("click", function () {
   passInput.focus();
 });
 
-var state = { q: "", tipe: "1" };
+var SEMUA_ID = TIPES[0].id;
+var state = { q: "", tipe: SEMUA_ID };
 var chips = [];
 
 var TYPE_LABEL = {};
@@ -91,20 +100,33 @@ function favSources(domain) {
   ];
 }
 
+var favCache = {};
+
 function placeFav(ico, letter, domain) {
   ico.appendChild(letter);
   var urls = favSources(domain);
+  if (favCache[domain]) {
+    urls = [favCache[domain]].concat(urls.filter(function (u) { return u !== favCache[domain]; }));
+  }
   var idx = 0;
   function tryNext() {
     if (idx >= urls.length) return;
     var img = new Image();
     img.className = "card-fav";
+    img.decoding = "async";
     img.setAttribute("alt", "");
+    img.referrerPolicy = "no-referrer";
     img.addEventListener("load", function () {
+      if (!favCache[domain]) favCache[domain] = img.src;
       ico.innerHTML = "";
       ico.appendChild(img);
     });
     img.addEventListener("error", function () {
+      if (favCache[domain]) {
+        favCache[domain] = "";
+        urls = favSources(domain);
+        idx = -1;
+      }
       idx++;
       tryNext();
     });
@@ -120,7 +142,7 @@ function buildCard(s, i) {
   a.href = s.url;
   a.target = "_blank";
   a.rel = "noopener noreferrer";
-  a.style.animationDelay = i * 40 + "ms";
+  a.style.animationDelay = Math.min(i * 40, 400) + "ms";
 
   if (s.url === "#") {
     a.addEventListener("click", function (e) { e.preventDefault(); });
@@ -183,7 +205,7 @@ function buildCard(s, i) {
 function render() {
   var q = state.q.toLowerCase();
   var list = SITES.filter(function (s) {
-    return (state.tipe === "1" || s.tipe === state.tipe) &&
+    return (state.tipe === SEMUA_ID || s.tipe === state.tipe) &&
       (s.nama + " " + s.url + " " + s.tag).toLowerCase().indexOf(q) !== -1;
   });
 

@@ -1,9 +1,9 @@
 const TIPES = [
-  { id: "1",      label: "Semua" },
-  { id: "2",       label: "Jadwal" },
+  { id: "1", label: "Semua" },
+  { id: "2", label: "Jadwal" },
   { id: "3", label: "Kerjaan" },
-  { id: "4",      label: "Produktivitas" },
-  { id: "5",    label: "Lainnya" },
+  { id: "4", label: "Produktivitas" },
+  { id: "5", label: "Lainnya" },
 ];
 
 const SITES = [
@@ -19,4 +19,8 @@ const SITES = [
     url: "https://nahafinance.vercel.app",
     tipe: "3",
     tag: "Finansial Tabungan" },
+  { nama: "Fee Mathematalk",
+    url: "https://docs.google.com/spreadsheets/d/1LjId8Gz9HWswfwniDhr9P1XSepOVmCxZjkOPTKjWA-k/edit?usp=sharing",
+    tipe: "3",
+    tag: "Finansial Analysis Fee" }
 ];
