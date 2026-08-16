@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#121212">
+  <title>NafYu's Archive</title>
+  <link rel="icon" type="image/png" href="bg.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="lock" class="lock" role="dialog" aria-modal="true" aria-label="Akses pribadi">
+    <div class="lock-card" id="lockCard">
+      <div class="lock-stamp">RESTRICTED</div>
+      <p class="lock-kicker">// AUTH_REQUIRED</p>
+      <h1 class="lock-title">NafYu's Archive</h1>
+      <p class="lock-sub">Akses ekslusif kami</p>
+      <form id="lockForm" class="lock-form">
+        <div class="pass-wrap">
+          <input type="password" id="passInput" class="lock-input" placeholder="PASSWORD" autocomplete="off">
+          <button type="button" class="eye-btn" id="eyeBtn" aria-label="Tampilkan sandi">
+            <svg class="eye-show" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            <svg class="eye-hide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+          </button>
+        </div>
+        <button type="submit" class="lock-btn">BUKA</button>
+      </form>
+      <p class="lock-error" id="lockError">Sanes niku, nami ingkang kulo paringaken teng njenengan ket siyen</p>
+    </div>
+  </div>
+
+  <main id="main" class="main hidden">
+
+    <section class="hero">
+      <h1 class="hero-title">NafYu<span class="accent">.</span> 💕</h1>
+      <p class="hero-sub">arsip tautan bersama </p>
+      <p class="hero-hint">Damel mawon fitur Search &amp; Filter niki kersane gampil madosi nipun</p>
+    </section>
+
+    <section class="controls">
+      <div class="search-wrap">
+        <span class="search-prefix" aria-hidden="true">&gt;</span>
+        <input type="text" id="search" class="search" placeholder="cari nama / url / tag…" autocomplete="off" spellcheck="false">
+      </div>
+      <div class="chips" id="chips" role="group" aria-label="Filter tipe"></div>
+      <p class="counter" id="counter">—</p>
+    </section>
+
+    <section class="grid" id="grid"></section>
+
+    <footer class="foot">@NafYu 2026 💕</footer>
+
+  </main>
+
+  <script src="sites.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
