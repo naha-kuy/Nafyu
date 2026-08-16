@@ -7,16 +7,16 @@ const TIPES = [
 ];
 
 const SITES = [
-  { nama: "Naha's Activities",
+  { nama: "Naha's",
     url: "https://nafyu.notion.site/naha",
     tipe: "2",
     tag: "Naha Activities" },
-  { nama: "Yuliana's Activities",
+  { nama: "Yuliana's",
     url: "https://nafyu.notion.site/yuliana",
     tipe: "2",
     tag: "Yuliana Activities" },
   { nama: "Nafyu",
     url: "https://nahafinance.vercel.app",
     tipe: "3",
-    tag: "tulisan artikel cerita harian" },
+    tag: "Finansial Tabungan" },
 ];

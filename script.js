@@ -149,7 +149,8 @@ function buildCard(s, i) {
 
   var arrow = document.createElement("span");
   arrow.className = "card-arrow";
-  arrow.textContent = "->";
+  arrow.setAttribute("aria-hidden", "true");
+  arrow.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></svg>';
 
   top.appendChild(ico);
   top.appendChild(title);
