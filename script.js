@@ -207,16 +207,23 @@ function buildCard(s, i) {
   return a;
 }
 
+function sitePool() {
+  if (state.tipe === SEMUA_ID) {
+    return SITES.filter(function (s) { return s.showSemua !== false; });
+  }
+  return SITES.filter(function (s) { return typesOf(s).indexOf(state.tipe) !== -1; });
+}
+
 function render() {
   var q = state.q.toLowerCase();
-  var list = SITES.filter(function (s) {
-    return (state.tipe === SEMUA_ID || typesOf(s).indexOf(state.tipe) !== -1) &&
-      (s.nama + " " + s.url + " " + s.tag).toLowerCase().indexOf(q) !== -1;
+  var pool = sitePool();
+  var list = pool.filter(function (s) {
+    return (s.nama + " " + s.url + " " + s.tag).toLowerCase().indexOf(q) !== -1;
   });
 
   counterEl.textContent = list.length === 0
     ? "tidak ada tautan yang cocok"
-    : "menampilkan " + list.length + " dari " + SITES.length + " tautan";
+    : "menampilkan " + list.length + " dari " + pool.length + " tautan";
 
   chips.forEach(function (c, i) {
     var active = TIPES[i].id === state.tipe;
